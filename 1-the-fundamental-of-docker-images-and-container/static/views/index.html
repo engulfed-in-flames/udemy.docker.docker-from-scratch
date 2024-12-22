@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <title>Learning Docker - 1</title>
+  </head>
+  <body class="font-sans subpixel-antialiased bg-slate-800 text-slate-900">
+    <div
+      class="overflow-auto w-3/4 h-screen mx-auto my-6 p-6 bg-slate-50 rounded-sm shadowm-2xl"
+    >
+      <main>
+        <section>
+          <h1 class="text-2xl font-bold mb-6">Build a Docker image</h1>
+          <ul class="flex flex-col gap-4 list-inside">
+            <li>
+              <p class="mb-2">1. Build an image.</p>
+              <div
+                class="flex gap-2 text-slate-800 border border-gray-800 bg-white text-sm font-mono py-1 px-2 rounded-sm"
+              >
+                <span>$</span>
+                <code class="flex-1">docker build .</code>
+              </div>
+            </li>
+            <hr />
+            <li>
+              <p class="mb-2">2. Run detached container with port mapping.</p>
+              <div
+                class="flex gap-2 text-slate-800 border border-gray-800 bg-white text-sm font-mono py-1 px-2 rounded-sm"
+              >
+                <span>$</span>
+                <code class="flex-1">docker run -p PORT:PORT -d IMAGE </code>
+              </div>
+            </li>
+            <hr />
+            <li>
+              <p class="mb-2">
+                3. Entering interactive mode to a running container.
+              </p>
+              <div
+                class="flex gap-2 text-slate-800 border border-gray-800 bg-white text-sm font-mono py-1 px-2 rounded-sm"
+              >
+                <span>$</span>
+                <code class="flex-1">docker exec -it CONTAINER sh </code>
+              </div>
+            </li>
+            <hr />
+            <li>
+              <p class="mb-2">4. Print logs of the detached container.</p>
+              <div
+                class="flex gap-2 text-slate-800 border border-gray-800 bg-white text-sm font-mono py-1 px-2 rounded-sm"
+              >
+                <span>$</span>
+                <code class="flex-1">docker logs [OPTIONS] CONTAINER </code>
+              </div>
+            </li>
+            <hr />
+            <li>
+              <p class="mb-2">5. Inspect an image.</p>
+              <div
+                class="flex gap-2 text-slate-800 border border-gray-800 bg-white text-sm font-mono py-1 px-2 rounded-sm"
+              >
+                <span>$</span>
+                <code class="flex-1">docker inspect IMAGE</code>
+              </div>
+            </li>
+            <hr />
+            <li>
+              <p class="mb-2">6. Copy files into or from a container.</p>
+              <p class="mb-1">Copy files into a container (not recommended).</p>
+              <div
+                class="flex gap-2 text-slate-800 border border-gray-800 bg-white text-sm font-mono py-1 px-2 mb-2 rounded-sm"
+              >
+                <span>$</span>
+                <code class="flex-1">
+                  docker cp [OPTIONS] SRC CONTAINER:DEST
+                </code>
+              </div>
+              <p class="mb-1">
+                Copy files from a container.
+                <br />
+                Use cases: Extract log files from the container.
+              </p>
+
+              <div
+                class="flex gap-2 text-slate-800 border border-gray-800 bg-white text-sm font-mono py-1 px-2 rounded-sm"
+              >
+                <span>$</span>
+                <code class="flex-1">
+                  docker cp [OPTIONS] CONTAINER:DEST SRC
+                </code>
+              </div>
+            </li>
+            <hr />
+            <li>
+              <p class="mb-2">7. Tag images.</p>
+              <div
+                class="flex gap-2 text-slate-800 border border-gray-800 bg-white text-sm font-mono py-1 px-2 rounded-sm"
+              >
+                <span>$</span>
+                <code class="flex-1"> docker build -t IMAGE_NAME:TAG . </code>
+              </div>
+            </li>
+            <hr />
+            <li>
+              <p class="mb-2">8. Name containers.</p>
+              <div
+                class="flex gap-2 text-slate-800 border border-gray-800 bg-white text-sm font-mono py-1 px-2 rounded-sm"
+              >
+                <span>$</span>
+                <code class="flex-1">
+                  docker run -p PORT:PORT -d --rm --name CONTAINER_NAME IMAGE
+                </code>
+              </div>
+            </li>
+          </ul>
+        </section>
+      </main>
+    </div>
+    <script>
+      'use strict';
+
+      const copyBtn = document.createElement('span');
+      copyBtn.classList.add(
+        'btn--copy',
+        'flex',
+        'cursor-pointer',
+        'w-5',
+        'h-5',
+        'opacity-100',
+        'hover:opacity-60',
+        'duration-200'
+      );
+      copyBtn.innerHTML = `
+        <svg
+          xmlns="http://www.w3.org/
+          2000/svg"
+          width="32"
+          height="32"
+          fill="#000000"
+          viewBox="0 0 256 256"
+        >
+          <path
+            d="M184,64H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H184a8,8,0,0,0,8-8V72A8,8,0,0,0,184,64Zm-8,144H48V80H176ZM224,40V184a8,8,0,0,1-16,0V48H72a8,8,0,0,1,0-16H216A8,8,0,0,1,224,40Z"
+          ></path>
+        </svg>
+      `;
+
+      const codeTags = document.querySelectorAll('code');
+      codeTags.forEach((c) => {
+        const copied = copyBtn.cloneNode(true);
+        c.parentNode.appendChild(copied);
+      });
+
+      document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('btn--copy')) {
+          const text = e.target.previousElementSibling.innerText;
+          navigator.clipboard.writeText(text);
+        }
+      });
+    </script>
+  </body>
+</html>
